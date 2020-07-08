@@ -6,10 +6,28 @@ import { action } from "@storybook/addon-actions";
 import "index.scss";
 
 import Button from "components/Button";
-import DayListItem from "components/DayListItem"
-import DayList from "components/DayList"
-import InterviewerListItem from "components/InterviewerListItem"
-import InterviewerList from "components/InterviewerList"
+import DayListItem from "components/DayListItem";
+import DayList from "components/DayList";
+import InterviewerListItem from "components/InterviewerListItem";
+import InterviewerList from "components/InterviewerList";
+import Appointment from "components/Appointments";
+import Header from "components/Appointments/Header";
+import Empty from "components/Appointments/Empty";
+import Show from "components/Appointments/Show"
+
+//Easy on the spaces.
+storiesOf("Appointment", module)
+  .addParameters({
+    backgrounds: [{ name: "white", value: "#fff", default: true}]
+  })
+    .add("Appointment", () => <Appointment />)
+    .add("Appointment with Time", () => <Appointment time="12pm" />)
+    .add("Header", () => <Header time="12pm" />)
+    .add("Empty", () =>  <Empty onAdd={action("onAdd")} />)
+    .add("Show", () => <Show onEdit={action("onEdit")} onDelete={action("onDelete")} 
+      interviewer="Ms. Interviewer"
+      student="Mr.Student"
+    />)
 
 
 
@@ -21,13 +39,16 @@ storiesOf("Button", module)
   .add("Confirm", () => <Button confirm>Confirm</Button>)
   .add("Danger", () => <Button danger>Cancel</Button>)
   .add("Clickable", () => (
-    <Button onClick={action("button-clicked")}>Clickable</Button>
+    <Button onClick={action("button-clicked")}>
+      Clickable
+    </Button>
   ))
   .add("Disabled", () => (
     <Button disabled onClick={action("button-clicked")}>
       Disabled
     </Button>
-));
+  )
+);
 
 
 //Tests for DayListItem
@@ -106,7 +127,7 @@ storiesOf("InterviewerListItem", module)
       id={interviewer.id}
       name={interviewer.name}
       avatar={interviewer.avatar}
-      setInterviewer={action("setInterviewer")}
+      setInterviewer={event => action("setInterviewer")(interviewer.id)}
     />
   ));
 
