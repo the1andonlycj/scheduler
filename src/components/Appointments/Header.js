@@ -1,5 +1,6 @@
 import React from "react";
 
+//This module shows the header for the appointments block
 
 export default function Header(props) {
   return (

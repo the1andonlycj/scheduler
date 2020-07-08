@@ -1,6 +1,6 @@
 import React from 'react'
 
-//According to stories, this is being passed "onEdit" and "onDelete"
+//This module shows the appointments
 
 export default function Show(props) {
   return (<main className="appointment__card appointment__card--show">
@@ -14,11 +14,13 @@ export default function Show(props) {
     <section className="appointment__card-right">
       <section className="appointment__actions">
         <img
+          onClick={props.onEdit}
           className="appointment__actions-button"
           src="images/edit.png"
           alt="Edit"
         />
         <img
+          onClick={props.onDelete}
           className="appointment__actions-button"
           src="images/trash.png"
           alt="Delete"

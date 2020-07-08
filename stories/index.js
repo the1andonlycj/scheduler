@@ -13,9 +13,12 @@ import InterviewerList from "components/InterviewerList";
 import Appointment from "components/Appointments";
 import Header from "components/Appointments/Header";
 import Empty from "components/Appointments/Empty";
-import Show from "components/Appointments/Show"
+import Show from "components/Appointments/Show";
+import Confirm from "components/Appointments/Confirm";
+import Status from "components/Appointments/Status";
+import Error from "components/Appointments/Error";
 
-//Easy on the spaces.
+//Easy on the spaces: StoryBook allows spaces, but it can mess up the functionality.
 storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "white", value: "#fff", default: true}]
@@ -24,12 +27,22 @@ storiesOf("Appointment", module)
     .add("Appointment with Time", () => <Appointment time="12pm" />)
     .add("Header", () => <Header time="12pm" />)
     .add("Empty", () =>  <Empty onAdd={action("onAdd")} />)
-    .add("Show", () => <Show onEdit={action("onEdit")} onDelete={action("onDelete")} 
-      interviewer="Ms. Interviewer"
-      student="Mr.Student"
-    />)
-
-
+    .add("Show", () => 
+      <Show onEdit={action("onEdit")} 
+        onDelete={action("onDelete")} 
+        interviewer="Ms. Interviewer"
+        student="Mr.Student"
+      />)
+    .add("Confirm", () => 
+      <Confirm onConfirm={action("onConfirm")} 
+      onCancel={action("onCancel")}
+      message="Delete the appointment?"
+      />)
+    .add("Status", () => <Status message="Ima doin' a delete!" />)
+    .add("Error", () => 
+      <Error message="WhoopsieDoodlesWentToTown!"
+        onClose={action("onClose")}
+      />)
 
 storiesOf("Button", module)
   .addParameters({

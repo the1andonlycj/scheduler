@@ -1,5 +1,6 @@
 import React from "react";
 
+//This module establishes behavior for when there is NO appointment to show
 
 export default function Empty(props) {
   return (
