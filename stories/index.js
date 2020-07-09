@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
@@ -17,32 +17,65 @@ import Show from "components/Appointments/Show";
 import Confirm from "components/Appointments/Confirm";
 import Status from "components/Appointments/Status";
 import Error from "components/Appointments/Error";
+import Form from "components/Appointments/Form";
+
 
 //Easy on the spaces: StoryBook allows spaces, but it can mess up the functionality.
+
+//Tests for appointments
 storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "white", value: "#fff", default: true}]
   })
-    .add("Appointment", () => <Appointment />)
-    .add("Appointment with Time", () => <Appointment time="12pm" />)
-    .add("Header", () => <Header time="12pm" />)
-    .add("Empty", () =>  <Empty onAdd={action("onAdd")} />)
-    .add("Show", () => 
-      <Show onEdit={action("onEdit")} 
-        onDelete={action("onDelete")} 
-        interviewer="Ms. Interviewer"
-        student="Mr.Student"
-      />)
-    .add("Confirm", () => 
-      <Confirm onConfirm={action("onConfirm")} 
-      onCancel={action("onCancel")}
-      message="Delete the appointment?"
-      />)
-    .add("Status", () => <Status message="Ima doin' a delete!" />)
-    .add("Error", () => 
-      <Error message="WhoopsieDoodlesWentToTown!"
-        onClose={action("onClose")}
-      />)
+  .add("Appointment", () => <Appointment />)
+  .add("Appointment with Time", () => <Appointment time="12pm" />)
+  .add("Header", () => <Header time="12pm" />)
+  .add("Empty", () =>  <Empty onAdd={action("onAdd")} />)
+  .add("Show", () => 
+    <Show onEdit={action("onEdit")} 
+      onDelete={action("onDelete")} 
+      interviewer="Ms. Interviewer"
+      student="Mr.Student"
+    />)
+  .add("Confirm", () => 
+    <Confirm onConfirm={action("onConfirm")} 
+    onCancel={action("onCancel")}
+    message="Delete the appointment?"
+    />)
+  .add("Status", () => <Status message="Ima doin' a delete!" />)
+  .add("Error", () => 
+    <Error message="WhoopsieDoodlesWentToTown!"
+      onClose={action("onClose")}
+    />)
+  .add("Edit", () => 
+    <Form name="Wow, Such Name" 
+    interviewer="2" 
+    interviewers={interviewers}
+    onSave={action("onSave")}
+    onCancel={action("onCancel")}
+    />)
+  .add("Create", () => 
+    <Form interviewers={interviewers}
+    onSave={action("onSave")}
+    onCancel={action("onCancel")}
+    />)
+  .add("Appointment Empty", () => (
+    <Fragment>
+      <Appointment id={1} time="12pm" />
+      <Appointment id="last" time="1pm" />
+    </Fragment>
+  ))
+  .add("Appointment Booked", () => (
+    <Fragment>
+      <Appointment
+        id={1}
+        time="12pm"
+        interview={{ student: "Lydia Miller-Jones", interviewer: "S. Magoo" }}
+      />
+      <Appointment id="last" time="1pm" />
+    </Fragment>
+  ))
+
 
 storiesOf("Button", module)
   .addParameters({
