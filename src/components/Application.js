@@ -1,27 +1,12 @@
-import React, { useState } from "react";
+//Importing dependencies/tools from React and Axios
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
+//Importing components
 import "components/Application.scss";
-import DayList from "components/DayList"
-import InterviewerList from "components/InterviewerList"
-import Appointment from "components/Appointments"
-
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
+import DayList from "components/DayList";
+import InterviewerList from "components/InterviewerList";
+import Appointment from "components/Appointments";
 
 const interviewers = [
   { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
@@ -85,10 +70,24 @@ const appointments = [
     }
   }
 ];
-
+//response is an array of objects. each one has an id, name, appts.
 export default function Application(props) {
-  const [day, setDay] = useState("Monday")
+  const [days, setDays] = useState([]) //hoping to write things to this array
+  const [day, setDay] = useState("Monday") 
   const [interviewer, setInterviewer] = useState("3")
+  
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/api/days`)
+      .then((response) => {
+        setDays(response.data) //Call setDays on the data we get from line 83--that's the goal.
+      })
+  }, [])
+  
+
+  //I have the array. Now I need... to access each object, then get the .name from it
+  //once i have those days of the week, they need to be displayed in the sidebar.
+  
   return (
     <main className="layout">
       <section className="sidebar">
