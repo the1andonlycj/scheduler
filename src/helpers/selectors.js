@@ -1,5 +1,5 @@
 //Selector code for extracting appointments from state object
-export function getAppointmentsForDay(state, day) {
+export default function getAppointmentsForDay(state, day) {
 
   let match = state.days.find(obj => obj.name === day);
   if(match) {

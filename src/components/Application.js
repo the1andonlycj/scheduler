@@ -7,7 +7,10 @@ import "components/Application.scss";
 import DayList from "components/DayList";
 import InterviewerList from "components/InterviewerList";
 import Appointment from "components/Appointments";
+import getAppointmentsForDay from "../helpers/selectors"
 
+
+//Hardcoded Data
 const interviewers = [
   { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
   { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
@@ -16,74 +19,39 @@ const interviewers = [
   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
 ];
 
-const appointments = [
-  {
-    id: 1,
-    time: "12pm",
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-    {
-    id: 3,
-    time: "3pm",
-    interview: {
-      student: "Giggly Puff",
-      interviewer: {
-        id: 1,
-        name: "Bees?",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-    {
-    id: 4,
-    time: "4pm",
-    interview: {
-      student: "Old Man Jenkums",
-      interviewer: {
-        id: 1,
-        name: "Marlboro Macaque",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-    {
-    id: 5,
-    time: "5pm",
-    interview: {
-      student: "Pantsu No Dorobo",
-      interviewer: {
-        id: 1,
-        name: "Bitsy, the Savant Chihuahua",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  }
-];
 
+//Functional Data
 export default function Application(props) {
-  const [days, setDays] = useState([])
-  const [day, setDay] = useState("Monday") 
-  const [interviewer, setInterviewer] = useState("3")
+  const setDay = day => {setState({ ...state, day })
+  console.log("The day is " , day)
+  };
+  
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    appointments: {}
+  });
+ 
+  console.log("here's the state:", state)
+  
+  
+  let appointments = getAppointmentsForDay(state, state.day);
+  console.log("Appointments ahoy: ", appointments)
   
   useEffect(() => {
-    axios
-      .get(`http://localhost:3001/api/days`)
-      .then((response) => {
-        setDays(response.data)
-      })
-  }, [])
+    const promise1 = axios.get("http://localhost:3001/api/days")
+    const promise2 = axios.get("http://localhost:3001/api/appointments")
     
+    Promise.all([
+      promise1, promise2
+    ]).then((all) => {
+      setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data}))
+    })
+
+  }, []);
+  
+
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -92,10 +60,10 @@ export default function Application(props) {
         className="sidebar--centered"
         src="images/logo.png"
         alt="Interview Scheduler"
-      />
+        />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={days} day={day} setDay={setDay} />
+          <DayList days={state.days} day={state.day} setDay={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -104,11 +72,10 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        <InterviewerList interviewers={interviewers} interviewer={interviewer} setInterviewer={setInterviewer} />
+        <InterviewerList interviewers={interviewers} interviewer={state.interviewer} setInterviewer={state.setInterviewer} />
         {
           appointments.map(appointment =>
             <Appointment key={appointment.id} {...appointment} />
-            
           )
         }
       </section>
