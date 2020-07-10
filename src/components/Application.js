@@ -70,9 +70,9 @@ const appointments = [
     }
   }
 ];
-//response is an array of objects. each one has an id, name, appts.
+
 export default function Application(props) {
-  const [days, setDays] = useState([]) //hoping to write things to this array
+  const [days, setDays] = useState([])
   const [day, setDay] = useState("Monday") 
   const [interviewer, setInterviewer] = useState("3")
   
@@ -80,14 +80,10 @@ export default function Application(props) {
     axios
       .get(`http://localhost:3001/api/days`)
       .then((response) => {
-        setDays(response.data) //Call setDays on the data we get from line 83--that's the goal.
+        setDays(response.data)
       })
   }, [])
-  
-
-  //I have the array. Now I need... to access each object, then get the .name from it
-  //once i have those days of the week, they need to be displayed in the sidebar.
-  
+    
   return (
     <main className="layout">
       <section className="sidebar">
