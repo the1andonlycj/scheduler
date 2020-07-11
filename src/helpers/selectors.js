@@ -1,5 +1,5 @@
 //Selector code for extracting appointments from state object
-export default function getAppointmentsForDay(state, day) {
+export function getAppointmentsForDay(state, day) {
 
   let match = state.days.find(obj => obj.name === day);
   if(match) {
@@ -9,4 +9,23 @@ export default function getAppointmentsForDay(state, day) {
   } else {
     return [];
   }
-}
+};
+
+export function getInterview(state, interview) {
+   
+  let interviewObject = {};
+  for(let interviewerId in state.interviewers) {
+    if(interview) {
+      let intInterviewer = interview.interviewer;
+      let stateInterviewer = interviewerId;
+      if(intInterviewer.toString() === stateInterviewer.toString()) {
+        interviewObject = { 
+          ...interview, 
+          interviewer: state.interviewers[interviewerId]
+        }
+        return interviewObject;
+      }
+    }
+  }
+  return null
+};
