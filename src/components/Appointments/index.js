@@ -3,36 +3,37 @@ import Show from "components/Appointments/Show";
 import "./styles.scss";
 import Header from "components/Appointments/Header"
 import Empty from "components/Appointments/Empty"
-
+import useVisualMode from "hooks/useVisualMode"
+import Form from "./Form";
 
 
 //import ReactDOM from "react-dom";
 
-//Should I be using "React.createElement"?
-//Everything is imported. It has a return statement. It is taking in props.
-//The <> tags are doing nothing.
-//I do not know how to pass a time to the header <>
-
+const EMPTY = "EMPTY";
+const SHOW = "SHOW";
+const CREATE = "CREATE";
 
 export default function Appointment(props) {
-  console.log(props)
+  const { mode, transition, back } = useVisualMode(
+    props.interview ? SHOW : EMPTY
+  );
   return (
     <article className="appointment">
-      
-        <Header 
-          time={props.time}
-        />
-        {props.interview ? 
+
+      <Header
+        time={props.time}
+      />
+      {mode === EMPTY && <Empty onAdd={() => transition(CREATE)}/>}
+      {mode === SHOW && (
         <Show
-          id={props.id}
-          interviewer={props.interview.interviewer.name}
           student={props.interview.student}
-        /> 
-        : 
-        <Empty
-        />}
-      
-    
+          interviewer={props.interview.interviewer}
+        />
+      )}
+      {mode === CREATE && (
+        <Form interviewers={[]} onCancel={back}/>
+      )}
+
     </article>
 
   )

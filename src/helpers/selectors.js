@@ -29,3 +29,14 @@ export function getInterview(state, interview) {
   }
   return null
 };
+
+export function getInterviewersForDay(state, day) {
+  let match = state.days.find(obj => obj.name === day);
+  if (match) {
+    let matchedInterviewers = match.interviewers
+    let scheduledInterviewers = matchedInterviewers.map(interviewerId => state.interviewers[interviewerId])
+    return scheduledInterviewers
+  } else {
+    return [];
+  }
+};

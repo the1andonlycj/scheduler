@@ -1,15 +1,17 @@
 //Setup for back buttons/changing visual modes in app
 import { React, useState } from "react";
 
-export function useVisualMode(initial) {
+export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
+
+  console.log("mode before transition", mode)
 
   function transition(newMode, replace = false) {
     if(replace === true) {
       history.pop();
     }
-    
+
     setMode(newMode);
     setHistory([...history, newMode]);
     }
