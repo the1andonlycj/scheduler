@@ -9,20 +9,24 @@ export default function useVisualMode(initial) {
 
   function transition(newMode, replace = false) {
     console.log("newMode", newMode)
+    const newHistory = [...history];
     if(replace === true) {
-      history.pop();
+      newHistory.pop();
     }
 
     setMode(newMode);
-    setHistory([...history, newMode]);
-    }
+    setHistory([...newHistory, mode]);
+  }
   
-    function back() {
-      if(history.length > 1) {
-        history.pop();
-        setMode(history[history.length - 1])
-        console.log("Here's your mode: ", mode)
-      };
-    }
+  function back() {
+    if(history.length > 1) {
+      const newHistory = [...history];
+      newHistory.pop();
+      setHistory(newHistory);
+      setMode(newHistory[newHistory.length - 1])
+      console.log("Here's your mode: ", mode)
+    };
+  }
+
   return { mode, transition, back };
 }

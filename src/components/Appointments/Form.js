@@ -6,17 +6,17 @@ import Button from "components/Button"
 export default function Form(props) {
   const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-  const reset = (evt) => {
-    //evt.preventDefault(); 
+  const reset = (evt) => { 
     setName("");
     setInterviewer(null);
     props.onCancel();
   }
   const save = (evt) => {
-    //evt.preventDefault(); //submit button naturally refreshes the page, this stops that.
-    props.onSave(name, interviewer);
-    setName("");
-    setInterviewer(null);
+    if(name && interviewer) {
+      props.onSave(name, interviewer);
+      setName("");
+     setInterviewer(null);
+    }
   }
 
 
