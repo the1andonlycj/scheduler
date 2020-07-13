@@ -8,6 +8,7 @@ export default function useVisualMode(initial) {
   console.log("mode before transition", mode)
 
   function transition(newMode, replace = false) {
+    console.log("newMode", newMode)
     if(replace === true) {
       history.pop();
     }

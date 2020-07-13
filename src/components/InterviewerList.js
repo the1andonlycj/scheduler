@@ -1,3 +1,5 @@
+//Creating list of interviewers
+
 import React from "react";
 import "styles/InterviewerList.scss";
 import InterviewerListItem from "components/InterviewerListItem"
