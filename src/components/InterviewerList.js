@@ -2,7 +2,13 @@
 
 import React from "react";
 import "styles/InterviewerList.scss";
-import InterviewerListItem from "components/InterviewerListItem"
+import InterviewerListItem from "components/InterviewerListItem";
+import PropTypes from 'prop-types';
+
+InterviewerList.propTypes = {
+  interviewer: PropTypes.number,
+  onChange: PropTypes.func.isRequired
+};
 
 export default function InterviewerList(props) {
   return (
