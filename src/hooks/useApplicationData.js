@@ -13,9 +13,9 @@ export default function useApplicationData() {
   });
   
   useEffect(() => {
-    const daysPromise = axios.get("http://localhost:3001/api/days")
-    const apptmntsPromise = axios.get("http://localhost:3001/api/appointments")
-    const interviewersPromise = axios.get("http://localhost:3001/api/interviewers")
+    const daysPromise = axios.get("/api/days")
+    const apptmntsPromise = axios.get("/api/appointments")
+    const interviewersPromise = axios.get("/api/interviewers")
     
     Promise.all([
       daysPromise, apptmntsPromise, interviewersPromise
@@ -32,7 +32,7 @@ export default function useApplicationData() {
     console.log("Here's the cancelthing appointment: ", appointments[id])
     return axios
       .delete(
-        `http://localhost:3001/api/appointments/${id}`
+        `/api/appointments/${id}`
       )
       .then(r => setState({
         ...state,
@@ -54,7 +54,7 @@ export default function useApplicationData() {
 
     return axios
       .put(
-        `http://localhost:3001/api/appointments/${id}`,
+        `/api/appointments/${id}`,
         { interview }
       )
       .then(r => setState({
@@ -79,13 +79,6 @@ export default function useApplicationData() {
     
     days[selectedDay].spots = spotsRemaining
 
-    return axios
-      .put(`http://localhost:3001/api/days`,
-      { days })
-      .then(() => setState({
-        ...state,
-        days
-      }))
   }
 
   return {
