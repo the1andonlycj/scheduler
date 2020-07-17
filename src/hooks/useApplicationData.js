@@ -27,9 +27,6 @@ export default function useApplicationData() {
   function cancelInterview(id) {
     const appointments = { ...state.appointments }
     appointments[id].interview = null
-
-    console.log("Here's the state: ", state)
-    console.log("Here's the cancelthing appointment: ", appointments[id])
     return axios
       .delete(
         `/api/appointments/${id}`
@@ -68,17 +65,12 @@ export default function useApplicationData() {
     const days = { ...state.days };
     let selectedDay = 0;
     for(const day in days) {
-      console.log("selected day: ", selectedDay, "day.name: ", day)
       if(days[day].name === state.day) {
-        
         selectedDay = days[day].id - 1
       }
     }
     const spotsRemaining = days[selectedDay].spots + spotChange;
-    console.log("Spots at selected day: ", days[selectedDay].spots, "Statedotdot: ", state.day);
-    
     days[selectedDay].spots = spotsRemaining
-
   }
 
   return {

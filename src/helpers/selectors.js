@@ -31,7 +31,6 @@ export function getInterview(state, interview) {
 };
 
 export function getInterviewersForDay(state, day) {
-  console.log("State inside this function", state);
   let match = state.days && state.days.find(obj => obj.name === day);
   if (match) {
     let matchedInterviewers = match.interviewers
