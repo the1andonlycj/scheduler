@@ -12,18 +12,19 @@ export function getAppointmentsForDay(state, day) {
 };
 
 export function getInterview(state, interview) {
-   
   let interviewObject = {};
   for(let interviewerId in state.interviewers) {
     if(interview) {
       let intInterviewer = interview.interviewer;
       let stateInterviewer = interviewerId;
-      if(intInterviewer.toString() === stateInterviewer.toString()) {
-        interviewObject = { 
-          ...interview, 
-          interviewer: state.interviewers[interviewerId]
+      if (intInterviewer) {
+        if(intInterviewer.toString() === stateInterviewer.toString()) {
+          interviewObject = { 
+            ...interview, 
+            interviewer: state.interviewers[interviewerId]
+          }
+          return interviewObject;
         }
-        return interviewObject;
       }
     }
   }
