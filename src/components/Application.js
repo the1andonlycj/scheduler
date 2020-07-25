@@ -8,6 +8,8 @@ import DayList from "components/DayList";
 import Appointment from "components/Appointments";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
 
+
+
 //Refactored code to separate rendering from functionality:
 export default function Application(props) {
   const {
